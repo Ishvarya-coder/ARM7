@@ -1,0 +1,25 @@
+#include <LPC21xx.H>
+#define led1 1<<0
+#define led2 1<<1
+#define led3 1<<2
+void delay(int ms)
+{
+	T0PR=15000-1;
+	T0TCR=0x01;
+	while(T0TC<ms);
+	T0TCR=0x03;
+	T0TCR=0x00;
+}
+int main()
+{
+	int i;
+	PINSEL0=0x00000000;
+	IODIR0=led1|led2|led3;
+	for(i=15;i>0;i--)
+	{
+		IOCLR0=led1|led2|led3;
+		delay(500);
+		IOSET0=led1|led2|led3;
+		delay(500);
+	}
+}
