@@ -1,0 +1,19 @@
+#include <LPC21xx.H>
+#define led1 1<<0
+void delay(int ms)
+{
+	T0PR=15000-1;
+	T0TCR=0x01;
+	while(T0TC<1);
+	T0TCR=0x03;
+	T0TCR=0x00;
+}
+int main()
+{
+	PINSEL0=0x00000000;
+	IODIR0=led1;
+	IOSET0=led1;
+	delay(200);
+	IOCLR0=led1;
+	delay(200);
+}
